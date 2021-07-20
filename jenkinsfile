@@ -1,0 +1,27 @@
+pipeline{
+    agent{
+        label "mynode"
+    }
+    triggers {
+        cron("* * * * *")
+    }
+    stages{
+        stage("SCM"){
+            steps{
+                git ""
+            }
+        }
+        stage("BUILD"){
+            steps{
+                 sh script: "mvn clean package"
+            }
+        }
+        stage("POSTBUILD"){
+            steps{
+                 junit "gameoflife-web/target/surefire-reports/*.xml"
+                 archiveArtifacts "gameoflife-web/target/*.war"
+            }
+        }
+
+    }
+}
