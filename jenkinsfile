@@ -3,7 +3,7 @@ pipeline{
         label "mynode"
     }
     triggers {
-        cron("* * * * *")
+        cron("0 * * * *")
     }
     stages{
         stage("SCM"){
