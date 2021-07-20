@@ -8,7 +8,7 @@ pipeline{
     stages{
         stage("SCM"){
             steps{
-                git ""
+                git "https://github.com/Reddy-hub-sudo/spc-jenkins.git"
             }
         }
         stage("BUILD"){
@@ -18,8 +18,8 @@ pipeline{
         }
         stage("POSTBUILD"){
             steps{
-                 junit "gameoflife-web/target/surefire-reports/*.xml"
-                 archiveArtifacts "gameoflife-web/target/*.war"
+                 junit "target/surefire-reports/*.xml"
+                 archiveArtifacts "target/*.jar"
             }
         }
 
