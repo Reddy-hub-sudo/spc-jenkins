@@ -1,5 +1,10 @@
 pipeline{
     agent any
+    environment {
+        dockerImage = " "
+        registry = "vijendaraws/spc_dockerhub:1"
+        registryCredential = "docker_hub_id"
+    }
     triggers {
         cron("0 * * * *")
     }
@@ -18,14 +23,19 @@ pipeline{
         }
         stage("BUILD DOCKER IMAGE"){
             steps{
-                sh "docker image build -t spc_dockerhub:1 ."
+                script {
+                    dockerImage = docker.build registry
+                }
+                
             }
         }
         stage("Push to Dockerhub"){
             steps{
-                
-                sh "docker login -u vijendaraws -p Reddy@10775"
-                sh "docker push spc_dockerhub:1"
+              script {
+                  docker.withRegistry( "", registryCredential ) {
+                      dockerImage.push()
+                  }
+              }
             }
         }
         stage("POSTBUILD"){
