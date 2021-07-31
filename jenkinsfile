@@ -16,6 +16,11 @@ pipeline{
                 }
             }
         }
+        stage("BUILD DOCKER IMAGE"){
+            steps{
+                sh "docker image build -t vijendaraws/spc_dockerhub:1"
+            }
+        }
         stage("POSTBUILD"){
             steps{
                  junit "target/surefire-reports/*.xml"
