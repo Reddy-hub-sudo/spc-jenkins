@@ -26,6 +26,7 @@ pipeline{
                 withCredentials([string(credentialsId: 'passwd', variable: 'docker_hub_passwd')]) {
                    sh "docker login -u vijendaraws -p ${docker_hub_passwd}"
                 }
+                sh "docker push spc_dockerhub:1"
             }
         }
         stage("POSTBUILD"){
