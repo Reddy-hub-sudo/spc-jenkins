@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: replica
+  labels:
+    environment: qa
+    team: lt-ecommerce
+    name: vijendar
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      name: vijendar
+  template:
+    metadata:
+      labels:
+        name: vijendar
+    spec:
+      containers:
+        - name: spc-container
+          image: vijendaraws/spc_dockerhub
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: port-service
+  labels:
+    name: vijendar
+spec:
+  type: NodePort
+  selector:
+    name: vijendar
+  ports:
+    - nodePort: 32516
+      port: 8080
+      targetPort: 8080
