@@ -40,10 +40,7 @@ pipeline{
         }
         stage("Deploy image on kubernetes"){
             steps{
-                kubernetesDeploy(
-                    configs: "kubernetes.yaml",
-                    kubeconfigId: "kubernetes_id"
-                )
+                sh "kubectl apply -f kubernetes.yaml"
             }
         }
         stage("POSTBUILD"){
