@@ -1,6 +1,8 @@
 pipeline{
     agent any
     environment {
+        dockerImage = " "
+        registry = "vijendaraws/spc_dockerhub:1"
         registryCredential = "docker_hub_id"
     }
     triggers {
@@ -21,12 +23,27 @@ pipeline{
         }
         stage("BUILD DOCKER IMAGE"){
             steps{
-               sh "docker image build -t spc:1.0 ." 
+                script {
+                    dockerImage = docker.build registry
+                }
+                
             }
         }
         stage("Push to Dockerhub"){
             steps{
-              sh "registryCredential, docker image push spc:1.0"
+              script {
+                  docker.withRegistry( "", registryCredential ) {
+                      dockerImage.push()
+                    }
+                }
+            }
+        }
+        stage("Deploy image on kubernetes"){
+            steps{
+                kubernetesDeploy(
+                    configs: "kubernetes.yaml",
+                    kubeconfigId: "kubernetes_id"
+                )
             }
         }
         stage("POSTBUILD"){
