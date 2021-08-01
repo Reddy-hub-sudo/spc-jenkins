@@ -21,7 +21,7 @@ metadata:
 spec:
   type: NodePort
   selector:
-    name: app
+    name: spc-container
   ports:
     - nodePort: 32516
       port: 8080
