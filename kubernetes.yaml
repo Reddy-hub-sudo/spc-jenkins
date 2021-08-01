@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: springpet-clinic
+  name: springpet
   labels:
     name: spc
 spec:
@@ -23,6 +23,6 @@ spec:
   selector:
     name: spc-container
   ports:
-    - nodePort: 32516
+    - nodePort: 8080
       port: 8080
       targetPort: 8080
