@@ -23,6 +23,6 @@ spec:
   selector:
     name: spc-container
   ports:
-    - nodePort: 8080
+    - nodePort: 32516
       port: 8080
       targetPort: 8080
